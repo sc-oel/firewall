@@ -10,7 +10,7 @@ git clone https://github.com/sc-oel/firewall.git
 ## Make the Rules Permenant
 ### Debian-based Distributions
 ```
-sudo apt install iptables-persistent
+sudo apt install iptables-persistent &&
 sudo /etc/init.d/netfilter-persistent save
 ```
 ### Arch Linux Distributions
