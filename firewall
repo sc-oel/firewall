@@ -2,11 +2,10 @@
 #
 # iptables example configuration script
 
-# Enter the ip the will only be allowed into ssh
+# Enter the ip that will only have ssh access
 ip=
-
 # Enter new ssh port
-sst=
+ssh=
 
 
 # Drop ICMP echo-request messages sent to broadcast or multicast addresses
@@ -49,8 +48,9 @@ echo 1 > /proc/sys/net/ipv4/conf/all/log_martians
  
 #Ratelimit SSH for attack protection
 /sbin/iptables -A INPUT -p tcp --dport $ssh -m state --state NEW -m recent --update --seconds 60 --hitcount 4 -j DROP
-/sbin/iptables -A INPUT -p tcp --dport $ssh  -m state --state NEW -m recent --set
-/sbin/iptables -A INPUT -p tcp --dport $ssh -m state --state NEW -j ACCEPT
+/sbin/iptables -A INPUT -p tcp --dport $ssh -m state --state NEW -m recent --set
+/sbin/iptables -I INPUT -s $ip -p tcp -m tcp --dport $ssh -j ACCEPT
+
  
 # Allow certain ports to be accessible from the outside
 #/sbin/iptables -A INPUT -p tcp --dport 25565 -m state --state NEW -j ACCEPT  #Minecraft
